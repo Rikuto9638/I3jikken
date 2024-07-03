@@ -13,27 +13,14 @@ st.title('Internet App')
 
 
 def load_data():
-    if os.stat("data.csv").st_size == 0:
-        return None
-    data = pd.read_csv('data.csv', on_bad_lines='skip', usecols=[0, 1])
-    # dataの型を数値に変換
-    for col in data.columns:
-        data[col] = pd.to_numeric(data[col], errors='coerce')
-    # 読み取ったデータは消去
-    open('data.csv', 'w').close()
-    return data
-
-
-def load_data():
     with open('data.csv', 'r') as f:
         reader = csv.reader(f)
         data = []
         for row in reader:
             try:
-                # Convert each field to numeric
                 data.append([float(field) for field in row])
             except ValueError:
-                # Skip the row if an error occurred
+                # エラーが起きた行はスキップ
                 continue
     data = pd.DataFrame(data)
     open('data.csv', 'w').close()
@@ -50,9 +37,6 @@ def run():
 
     if 'server_or_client' not in st.session_state:
         st.session_state.server_or_client = 'Server'
-
-    if "graph_start" not in st.session_state:
-        st.session_state["graph_start"] = True
 
     if "user_input" not in st.session_state:
         st.session_state["user_input"] = ""
@@ -122,9 +106,9 @@ def run():
         st.session_state.proc.stdin.write(b"s\n")
 
     # データの可視化
-    data = deque(maxlen=10000) # 10000個のデータを保持
+    data = deque(maxlen=10000)  # 10000個のデータを保持
     chart = st.empty()
-    
+
     while True:
         new_data = load_data()
 
@@ -138,7 +122,9 @@ def run():
         # データをDataFrameに変換
         df = pd.DataFrame(data)
         if not df.empty:
-            df.columns = ['voice of me', 'voice of the person'] + ['extra_column_{}'.format(i) for i in range(1, df.shape[1] - 1)]
+            df.columns = ['voice of me', 'voice of the person'] + \
+                ['extra_column_{}'.format(i)
+                 for i in range(1, df.shape[1] - 1)]
             for col in df.columns:
                 df[col] = pd.to_numeric(df[col], errors='coerce')
 
