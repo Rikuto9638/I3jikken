@@ -35,3 +35,4 @@ gcc -o iphone11 iphone11.c
 * 東京大学工学部電子情報工学科電子電子工学科編　電気電子情報第一（前期）実験テキスト
 * [C言語で音声合成もどき ～母音の生成～](https://moge32.blogspot.com/2012/08/3c.html)
 * [ドレミの振動数！ピアノ88鍵全音域の周波数一覧表](https://inalesson.com/frequency_list/2417/)
+* [streamlitを使ったお手軽Webアプリ開発](https://qiita.com/sypn/items/80962d84126be4092d3c)
